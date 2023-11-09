@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <!-- código para exportar o css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Descomente esse código para usar bootstrap -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lista de Clientes</title>
+</head>
+
+
+
+<body>
+
+  <h1>Selecione um Cliente para Editar</h1>
+
+
+
+  {% for aluno in alunos %}
+  <h5>Nome: {{ aluno.nome }}</h5>
+  <h5>Email: {{ aluno.email }}<h5>
+  <h5>Sexo: {{ aluno.sexo }}<h5>
+  <h5>Data de nascimento: {{ aluno.data_nascimento }}<h5>
+  <h5>CPF: {{ aluno.cpf }}<h5>
+  <h5>Telefone: {{ aluno.telefone }}<h5>
+
+  <form method="" action="{% url 'editar_aluno' aluno.id %}" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-sm">Editar</button>
+  </form>
+
+    <form method="post" action="{% url 'excluir_aluno' aluno.id %}" style="display: inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+    </form>
+    <hr>
+
+  <hr>
+{% endfor %}
+
+    <a href="{% url 'home' %}">Página inicial</a>
+
+
+</body>
+
+
+
+</html>

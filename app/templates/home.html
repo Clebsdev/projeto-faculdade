@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <!-- código para importar o css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+        <!-- Descomente esse código para usar bootstrap -->
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Página inicial</title>
+    </head>
+
+    <body class="homeBody">
+        <header>
+            <nav class="navbar">
+                <img class="logo" src="/app/static/img/sic.svg" alt="Logo" height="40"/>
+                <style>
+                    .nome-usuario {
+                    color: #00606c;
+                    padding-left: 10px;
+                    font-family: 'Arial', sans-serif; 
+                    font-size: 16px;
+                    }
+                  </style>
+                 <span class="nome-usuario">Aluno: {{ user.username }}</span>
+
+
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="{% url 'cadastrar_aluno' %}">Escola</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'login_acesso_aluno' %}">Aluno</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Instruções</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Dúvidas</a>
+                    </li>
+                </ul>   
+            </nav>
+        </header>
+
+        <main class="content">
+
+            <div class="setor">
+                {% if user.is_authenticated %}
+                Você está logado como:
+                <hr>
+                <h5>Nome: {{ user.username }}</h5>
+                {% else %}
+
+                Escolas cadastradas:
+                <hr>
+                {% for contaescola in contaescolas %}
+                <h5>{{ contaescola.username }}</h5>
+                {% endfor %}
+                Além dos alunos, as escolas e instituições de ensino superior devem registrar-se no GVBus para garantir que seus estudantes possam desfrutar dos benefícios oferecidos. O processo de cadastro é descomplicado e conveniente, realizado de maneira fácil através da opção "escola" na barra de menu desta plataforma.
+                {% endif %}
+            </div>
+
+
+            <div class="setor">
+                {% if user.is_authenticated %}
+                Você está logado como:
+                <hr>
+                <h5>Nome: {{ aluno.username }}</h5>
+                {% else %}
+
+                Alunos cadastrados:
+                <hr>
+                {% for aluno in alunos %}
+                <h5>{{ aluno.username }}</h5>
+                {% endfor %}
+                Para realizar o cadastro, aqueles que ainda não o possuem devem acessar a opção "aluno" na barra de menu de cadastro/recadastro de estudantes. Em seguida, é necessário escolher a categoria correspondente, preencher o formulário aguardar a analise do seus dados.
+                {% endif %}
+            </div>        
+        </main>
+
+        
+
+        <footer>Sistema Integrado de Cadastro</footer>
+    </body>
+</html>
